@@ -30,7 +30,7 @@ namespace Keepr.Repositories
     internal Vault Create(Vault vaultData)
     {
       string sql = @"
-            INSERT INTO vaults (name, description, img) VALUES (@Name, @Description, @Img);
+            INSERT INTO vaults (name, description) VALUES (@Name, @Description);
             SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, vaultData);
       vaultData.Id = id;
