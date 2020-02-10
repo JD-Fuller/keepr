@@ -22,9 +22,8 @@ namespace Keepr.Repositories
     }
     internal Keep GetById(int Id)
     {
-      string sql = "SELECT * FROm students WHERE id = @Id";
+      string sql = "SELECT * FROM students WHERE id = @Id";
       return _db.QueryFirstOrDefault<Keep>(sql, new { Id });
-
     }
 
     internal Keep Create(Keep keepData)
@@ -35,6 +34,17 @@ namespace Keepr.Repositories
       int id = _db.ExecuteScalar<int>(sql, keepData);
       keepData.Id = id;
       return keepData;
+    }
+
+    internal void Delete(int id)
+    {
+      string sql = "DELETE FROM keeps WHERE id = @id";
+      _db.Execute(sql, new { id });
+    }
+
+    internal void Edit(Keep update)
+    {
+      throw new NotImplementedException();
     }
   }
 }

@@ -42,5 +42,10 @@ namespace Keepr.Repositories
       string sql = "DELETE FROM vaults WHERE id = @id";
       _db.Execute(sql, new { id });
     }
+
+    internal void Edit(Vault update)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

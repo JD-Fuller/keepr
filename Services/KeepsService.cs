@@ -13,16 +13,47 @@ namespace Keepr.Services
     {
       _repo = kr;
     }
-    public IEnumerable<Keep> Get()
+    internal IEnumerable<Keep> Get()
     {
       return _repo.Get();
     }
 
+    internal object GetById(int id)
+    {
+      var exists = _repo.GetById(id);
+      if (exists == null) { throw new Exception("Invalid ID"); }
+      return exists;
+    }
     public Keep Create(Keep newKeep)
     {
       //   newKeep.Id = _repo.Create(newKeep);
       _repo.Create(newKeep);
       return newKeep;
+    }
+    internal Keep Edit(Keep update)
+    {
+      Keep exists = _repo.GetById(update.Id);
+      if (exists == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      if (exists.UserId != update.UserId)
+      {
+        throw new Exception("Invalid User");
+      }
+      _repo.Edit(update);
+      return update;
+    }
+
+    internal object Delete(int id)
+    {
+      var exists = _repo.GetById(id);
+      if (exists == null)
+      {
+        throw new Exception("Invalid ID");
+      }
+      _repo.Delete(id);
+      return "Successfully Deleted";
     }
   }
 }
