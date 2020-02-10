@@ -38,10 +38,10 @@ namespace Keepr.Services
       {
         throw new Exception("Invalid Id");
       }
-      if (exists.UserId != update.UserId)
-      {
-        throw new Exception("Invalid User");
-      }
+      // if (exists.UserId != update.UserId)
+      // {
+      //   throw new Exception("Invalid User");
+      // }
       _repo.Edit(update);
       return update;
     }

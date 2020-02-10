@@ -29,7 +29,7 @@ namespace Keepr.Repositories
     internal Keep Create(Keep keepData)
     {
       string sql = @"
-            INSERT INTO keeps (name, description, img, isPrivate) VALUES (@Name, @Description, @Img, @isPrivate);
+            INSERT INTO keeps (name, description, img, isPrivate) VALUES (@Name, @Description, @Img, @IsPrivate);
             SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, keepData);
       keepData.Id = id;

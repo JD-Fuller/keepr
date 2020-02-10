@@ -50,15 +50,31 @@ namespace Keepr.Controllers
       }
     }
 
-
     [HttpPost]
-    public ActionResult<Vault> Post([FromBody] Vault newVault)
+    [Authorize]
+    public ActionResult<Vault> Create([FromBody] Vault newVault)
     {
       try
       {
         var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         newVault.UserId = userId;
         return Ok(_vs.Create(newVault));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+    [HttpPost("{id}")]
+    public ActionResult<Vault> Edit([FromBody] Vault update, int id)
+    {
+      try
+      {
+        update.Id = id;
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vs.Edit(update));
       }
       catch (Exception e)
       {
