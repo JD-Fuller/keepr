@@ -6,22 +6,23 @@ using Keepr.Repositories;
 
 namespace Keepr.Services
 {
-    public class KeepsService
+  public class KeepsService
+  {
+    private readonly KeepsRepository _repo;
+    public KeepsService(KeepsRepository kr)
     {
-        private readonly KeepsRepository _repo;
-        public KeepsService(KeepsRepository repo)
-        {
-            _repo = repo;
-        }
-        public IEnumerable<Keep> Get()
-        {
-            return _repo.Get();
-        }
-
-        public Keep Create(Keep newKeep)
-        {
-            newKeep.Id = _repo.Create(newKeep);
-            return newKeep;
-        }
+      _repo = kr;
     }
+    public IEnumerable<Keep> Get()
+    {
+      return _repo.Get();
+    }
+
+    public Keep Create(Keep newKeep)
+    {
+      //   newKeep.Id = _repo.Create(newKeep);
+      _repo.Create(newKeep);
+      return newKeep;
+    }
+  }
 }
