@@ -18,7 +18,7 @@ namespace Keepr.Services
       return _repo.Get();
     }
 
-    internal object GetById(int id)
+    internal Keep GetById(int id)
     {
       var exists = _repo.GetById(id);
       if (exists == null) { throw new Exception("Invalid ID"); }
@@ -37,10 +37,10 @@ namespace Keepr.Services
       {
         throw new Exception("Invalid Id");
       }
-      if (exists.UserId != update.UserId)
-      {
-        throw new Exception("Invalid User");
-      }
+      // if (exists.UserId != update.UserId)
+      // {
+      //   throw new Exception("Invalid User");
+      // }
       _repo.Edit(update);
       return update;
     }

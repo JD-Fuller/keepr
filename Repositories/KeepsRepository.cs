@@ -17,12 +17,12 @@ namespace Keepr.Repositories
 
     internal IEnumerable<Keep> Get()
     {
-      string sql = "SELECT * FROM Keeps WHERE isPrivate = 0;";
+      string sql = "SELECT * FROM keeps WHERE isPrivate = 0;";
       return _db.Query<Keep>(sql);
     }
     internal Keep GetById(int Id)
     {
-      string sql = "SELECT * FROM students WHERE id = @Id";
+      string sql = "SELECT * FROM keeps WHERE id = @Id";
       return _db.QueryFirstOrDefault<Keep>(sql, new { Id });
     }
 
@@ -35,16 +35,19 @@ namespace Keepr.Repositories
       keepData.Id = id;
       return keepData;
     }
-
+    internal void Edit(Keep update)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET name = @Name
+      WHERE id = @Id";
+      _db.Execute(sql, update);
+    }
     internal void Delete(int id)
     {
       string sql = "DELETE FROM keeps WHERE id = @id";
       _db.Execute(sql, new { id });
     }
 
-    internal void Edit(Keep update)
-    {
-      throw new NotImplementedException();
-    }
   }
 }
