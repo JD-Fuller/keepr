@@ -23,25 +23,12 @@ namespace Keepr.Services
       if (exists == null) { throw new Exception("This is not the droid you're looking for"); }
       return exists;
     }
-    // internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
-    // {
-    //   var exists = _repo.GetKeepsByVaultId(vaultId);
-    //   if (exists == null) { throw new Exception("This is not the droid you're looking for"); }
-    //   return exists;
-    // }
 
     internal object Create(VaultKeep newData)
     {
 
       newData.Id = _repo.Create(newData);
       return newData;
-      // VaultKeep exists = _repo.Find(newData.VaultId, newData.KeepId);
-      // if (exists == null)
-      // {
-      //   _repo.Create(newData);
-      // }
-      // else if (exists != null)
-      // { throw new Exception("Vault Keep already Exists"); }
     }
 
     public string Delete(int vaultId, int keepId, string userId)

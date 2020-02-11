@@ -1,6 +1,12 @@
 <template>
   <div class="home">
     <h1>Welcome Home</h1>
+
+    <div class="container">
+      <div class="card-columns">
+        <!-- NOTE is where cards will go -->
+      </div>
+    </div>
   </div>
 </template>
 
