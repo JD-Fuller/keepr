@@ -17,34 +17,47 @@ namespace Keepr.Services
     {
       return _repo.Get();
     }
-    internal VaultKeep GetById(int id)
+    // internal VaultKeep GetById(int id)
+    // {
+    //   var exists = _repo.GetById(id);
+    //   if (exists == null) { throw new Exception("Invalid ID"); }
+    //   return exists;
+    // }
+
+    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
     {
-      var exists = _repo.GetById(id);
-      if (exists == null) { throw new Exception("Invalid ID"); }
-      return exists;
+      return _repo.GetKeepsByVaultId(vaultId, userId);
     }
 
-    internal VaultKeep GetKeepsByVaultId(int id)
+    internal void Create(VaultKeep newData)
     {
-      return _repo.GetKeepsByVaultId(id);
+      VaultKeep exists = _repo.Find(newData);
+      if (exists != null) { throw new Exception("Vault Keep already Exists"); }
+      // newData.Id = _repo.Create(newData);
+      _repo.Create(newData);
     }
 
-    internal VaultKeep Create(VaultKeep newVaultKeep)
+    internal string Delete(int vaultId, int keepId, string userId)
     {
-      //   newVault.Id = _repo.Create(newVault);
-      _repo.Create(newVaultKeep);
-      return newVaultKeep;
-    }
-
-    internal string Delete(int id)
-    {
-      var exists = _repo.GetById(id);
+      var exists = _repo.GetById(vaultId, keepId, userId);
       if (exists == null)
       {
         throw new Exception("Invalid ID");
       }
-      _repo.Delete(id);
+      _repo.Delete(vaultId, keepId, userId);
       return "Successfully Deleted";
     }
+    // internal string Delete(int id)
+    // {
+    //   var exists = _repo.GetById(id);
+    //   if (exists == null)
+    //   {
+    //     throw new Exception("Invalid ID");
+    //   }
+    //   _repo.Delete(id);
+    //   return "Successfully Deleted";
+    // }
+
+
   }
 }
