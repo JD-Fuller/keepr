@@ -17,24 +17,26 @@ namespace Keepr.Services
     {
       return _repo.Get();
     }
-    // internal VaultKeep GetById(int id)
+    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    {
+      var exists = _repo.GetKeepsByVaultId(vaultId, userId);
+      if (exists == null) { throw new Exception("This is not the droid you're looking for"); }
+      return exists;
+    }
+    // internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
     // {
-    //   var exists = _repo.GetById(id);
-    //   if (exists == null) { throw new Exception("Invalid ID"); }
+    //   var exists = _repo.GetKeepsByVaultId(vaultId);
+    //   if (exists == null) { throw new Exception("This is not the droid you're looking for"); }
     //   return exists;
     // }
 
-    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    internal string Create(VaultKeep newData)
     {
-      return _repo.GetKeepsByVaultId(vaultId, userId);
-    }
-
-    internal void Create(VaultKeep newData)
-    {
-      VaultKeep exists = _repo.Find(newData);
+      VaultKeep exists = _repo.Find(newData.VaultId, newData.KeepId);
       if (exists != null) { throw new Exception("Vault Keep already Exists"); }
       // newData.Id = _repo.Create(newData);
       _repo.Create(newData);
+      return "Successfully created";
     }
 
     internal string Delete(int vaultId, int keepId, string userId)
@@ -47,17 +49,5 @@ namespace Keepr.Services
       _repo.Delete(vaultId, keepId, userId);
       return "Successfully Deleted";
     }
-    // internal string Delete(int id)
-    // {
-    //   var exists = _repo.GetById(id);
-    //   if (exists == null)
-    //   {
-    //     throw new Exception("Invalid ID");
-    //   }
-    //   _repo.Delete(id);
-    //   return "Successfully Deleted";
-    // }
-
-
   }
 }

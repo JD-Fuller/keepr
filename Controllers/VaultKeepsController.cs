@@ -20,41 +20,14 @@ namespace Keepr.Controllers
     {
       _vks = vks;
     }
-    // [HttpGet]
-    // [Authorize]
-    // public ActionResult<IEnumerable<VaultKeep>> Get()
-    // {
-    //   try
-    //   {
-    //     return Ok(_vks.Get());
-    //   }
-    //   catch (Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   };
-    // }
 
-    // [HttpGet("{id}")]
-    // [Authorize]
-    // public ActionResult<VaultKeep> Get(int id)
-    // {
-    //   try
-    //   {
-    //     return Ok(_vks.GetById(id));
-    //   }
-    //   catch (Exception e)
-    //   {
-
-    //     return BadRequest(e.Message);
-    //   }
-    // }
     [HttpGet("{vaultId}/keeps")]
     [Authorize]
-    public ActionResult<VaultKeep> Get(int vaultId)
+    public ActionResult<IEnumerable<Keep>> Get(int vaultId)
     {
       try
       {
-        string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         return Ok(_vks.GetKeepsByVaultId(vaultId, userId));
       }
       catch (Exception e)
@@ -62,12 +35,9 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
-
-
-
     [HttpPost]
     [Authorize]
-    public ActionResult<String> Create([FromBody] VaultKeep newData)
+    public ActionResult<String> Post([FromBody] VaultKeep newData)
     {
       try
       {
@@ -81,24 +51,10 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
-    // [HttpDelete("{vaultId}/keeps/{keepId}")]
-    // [Authorize]
-    // public ActionResult<string> Delete(int vaultId, int keepId)
-    // {
-    //   try
-    //   {
-    //     var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-    //     return Ok(_vks.Delete(vaultId, keepId, userId));
-    //   }
-    //   catch (Exception e)
-    //   {
 
-    //     return BadRequest(e.Message); ;
-    //   }
-    // }
     [HttpDelete("{vaultId}/keeps/{keepId}")]
     [Authorize]
-    public ActionResult<string> Delete(int vaultId, int keepId)
+    public ActionResult<String> Delete(int vaultId, int keepId)
     {
       try
       {

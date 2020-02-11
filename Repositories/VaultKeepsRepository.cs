@@ -28,7 +28,7 @@ namespace Keepr.Repositories
     }
     internal VaultKeep GetById(int vaultId, int keepId, string userId)
     {
-      string sql = @"SELECT * FROM vaultkeeps WHERE vaultId = @VaultId";
+      string sql = @"SELECT * FROM vaultkeeps WHERE vaultId = @VaultId AND keepId = @KeepId AND userId = @UserId";
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { vaultId, keepId, userId });
     }
 
@@ -37,15 +37,15 @@ namespace Keepr.Repositories
       string sql = @"
       SELECT k.* FROM vaultkeeps vk
       INNER JOIN keeps k ON k.id = vk.keepId 
-      WHERE (vaultId = @vaultId AND vk.userId = @userId)
+      WHERE (vk.vaultId = @VaultId AND vk.userId = @UserId)
       ";
       return _db.Query<Keep>(sql, new { vaultId, userId });
     }
 
-    internal VaultKeep Find(VaultKeep vaultData)
+    internal VaultKeep Find(int vaultId, int keepId)
     {
-      string sql = "SELECT * FROM vaultkeeps WHERE (vaultId = @VaultId AND keepId = @KeepId AND userId = @UserId)";
-      return _db.QueryFirstOrDefault(sql, vaultData);
+      string sql = "SELECT * FROM vaultkeeps WHERE (VaultId = @vaultId AND KeepId = @keepId)";
+      return _db.QueryFirstOrDefault(sql, new { vaultId, keepId });
     }
 
 
@@ -62,13 +62,8 @@ namespace Keepr.Repositories
 
     internal void Delete(int vaultId, int keepId, string userId)
     {
-      string sql = @"DELETE FROM vaultkeeps WHERE vaultId = @VaultId AND keepId = @KeepId AND userId = @UserId";
+      string sql = @"DELETE FROM vaultkeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId";
       _db.Execute(sql, new { vaultId, keepId, userId });
     }
-    // internal void Delete(int id)
-    // {
-    //   string sql = @"DELETE FROM vaultkeeps WHERE id = @Id";
-    //   _db.Execute(sql, new { id });
-    // }
   }
 }
