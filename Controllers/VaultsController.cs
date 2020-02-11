@@ -37,6 +37,7 @@ namespace Keepr.Controllers
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public ActionResult<Vault> Get(int id)
     {
       try
@@ -68,6 +69,7 @@ namespace Keepr.Controllers
 
 
     [HttpPost("{id}")]
+    [Authorize]
     public ActionResult<Vault> Edit([FromBody] Vault update, int id)
     {
       try
@@ -83,6 +85,7 @@ namespace Keepr.Controllers
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<String> Delete(int id)
     {
       try

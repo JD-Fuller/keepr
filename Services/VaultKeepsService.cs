@@ -8,27 +8,27 @@ namespace Keepr.Services
 {
   public class VaultKeepsService
   {
-    private readonly VaultsRepository _repo;
-    public VaultKeepsService(VaultsRepository vr)
+    private readonly VaultKeepsRepository _repo;
+    public VaultKeepsService(VaultKeepsRepository vkr)
     {
-      _repo = vr;
+      _repo = vkr;
     }
-    internal IEnumerable<Vault> Get()
+    internal IEnumerable<VaultKeep> Get()
     {
       return _repo.Get();
     }
-    internal Vault GetById(int id)
+    internal VaultKeep GetById(int id)
     {
       var exists = _repo.GetById(id);
       if (exists == null) { throw new Exception("Invalid ID"); }
       return exists;
     }
 
-    internal Vault Create(Vault newVault)
+    internal VaultKeep Create(VaultKeep newVaultKeep)
     {
       //   newVault.Id = _repo.Create(newVault);
-      _repo.Create(newVault);
-      return newVault;
+      _repo.Create(newVaultKeep);
+      return newVaultKeep;
     }
 
     internal string Delete(int id)
@@ -41,6 +41,5 @@ namespace Keepr.Services
       _repo.Delete(id);
       return "Successfully Deleted";
     }
-
   }
 }
