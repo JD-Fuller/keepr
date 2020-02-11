@@ -13,11 +13,11 @@ namespace Keepr.Services
     {
       _repo = vkr;
     }
-    internal IEnumerable<VaultKeep> Get()
+    public IEnumerable<VaultKeep> Get()
     {
       return _repo.Get();
     }
-    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    public IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
     {
       var exists = _repo.GetKeepsByVaultId(vaultId, userId);
       if (exists == null) { throw new Exception("This is not the droid you're looking for"); }
@@ -30,16 +30,21 @@ namespace Keepr.Services
     //   return exists;
     // }
 
-    internal string Create(VaultKeep newData)
+    internal object Create(VaultKeep newData)
     {
-      VaultKeep exists = _repo.Find(newData.VaultId, newData.KeepId);
-      if (exists != null) { throw new Exception("Vault Keep already Exists"); }
-      // newData.Id = _repo.Create(newData);
-      _repo.Create(newData);
-      return "Successfully created";
+
+      newData.Id = _repo.Create(newData);
+      return newData;
+      // VaultKeep exists = _repo.Find(newData.VaultId, newData.KeepId);
+      // if (exists == null)
+      // {
+      //   _repo.Create(newData);
+      // }
+      // else if (exists != null)
+      // { throw new Exception("Vault Keep already Exists"); }
     }
 
-    internal string Delete(int vaultId, int keepId, string userId)
+    public string Delete(int vaultId, int keepId, string userId)
     {
       var exists = _repo.GetById(vaultId, keepId, userId);
       if (exists == null)

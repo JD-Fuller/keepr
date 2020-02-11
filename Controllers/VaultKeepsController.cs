@@ -21,7 +21,7 @@ namespace Keepr.Controllers
       _vks = vks;
     }
 
-    [HttpGet("{vaultId}/keeps")]
+    [HttpGet("{vaultId}/Keeps")]
     [Authorize]
     public ActionResult<IEnumerable<Keep>> Get(int vaultId)
     {
@@ -37,14 +37,14 @@ namespace Keepr.Controllers
     }
     [HttpPost]
     [Authorize]
-    public ActionResult<String> Post([FromBody] VaultKeep newData)
+    public ActionResult<VaultKeep> Post([FromBody] VaultKeep newData)
     {
       try
       {
         var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         newData.UserId = userId;
-        _vks.Create(newData);
-        return Ok("Success");
+        ;
+        return Ok(_vks.Create(newData));
       }
       catch (Exception e)
       {
@@ -52,7 +52,7 @@ namespace Keepr.Controllers
       }
     }
 
-    [HttpDelete("{vaultId}/keeps/{keepId}")]
+    [HttpDelete("{vaultId}/Keeps/{keepId}")]
     [Authorize]
     public ActionResult<String> Delete(int vaultId, int keepId)
     {

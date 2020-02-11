@@ -15,12 +15,12 @@ namespace Keepr.Repositories
       _db = db;
     }
 
-    internal IEnumerable<VaultKeep> Get()
+    public IEnumerable<VaultKeep> Get()
     {
       string sql = "SELECT * FROM vaultkeeps WHERE isPrivate = 0;";
       return _db.Query<VaultKeep>(sql);
     }
-    internal VaultKeep GetById(int id)
+    public VaultKeep GetById(int id)
     {
       string sql = "SELECT * FROM vaultkeeps WHERE id = @id";
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
@@ -49,14 +49,14 @@ namespace Keepr.Repositories
     }
 
 
-    internal VaultKeep Create(VaultKeep newData)
+    internal int Create(VaultKeep newData)
     {
       string sql = @"
             INSERT INTO vaultkeeps (vaultId, keepId, userId) VALUES (@VaultId, @KeepId, @UserId);
             SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, newData);
-      newData.Id = id;
-      return newData;
+      // newData.Id = id;
+      return id;
     }
 
 
