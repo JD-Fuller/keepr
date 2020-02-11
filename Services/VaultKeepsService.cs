@@ -24,6 +24,11 @@ namespace Keepr.Services
       return exists;
     }
 
+    internal VaultKeep GetKeepsByVaultId(int id)
+    {
+      return _repo.GetKeepsByVaultId(id);
+    }
+
     internal VaultKeep Create(VaultKeep newVaultKeep)
     {
       //   newVault.Id = _repo.Create(newVault);

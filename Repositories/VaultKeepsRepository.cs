@@ -26,17 +26,25 @@ namespace Keepr.Repositories
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
 
     }
+    internal IEnumerable<Keep> GetKeepsByVaultId(int id)
+    {
+      string sql = @"
+      SELECT k.* FROM vaultkeeps vk
+      INNER JOIN keeps k ON k.id = vk.keepId 
+      WHERE (vaultId = @vaultId AND vk.userId = @userId)
+      ";
+      return _db.Query<Keep>(sql, new { id });
+    }
 
     internal VaultKeep Create(VaultKeep vaultKeepData)
     {
       string sql = @"
-            INSERT INTO vaultkeeps (name, description) VALUES (@Name, @Description);
+            INSERT INTO vaultkeeps (vaultId, keepId, userId) VALUES (@VaultId, @KeepId, @UserId);
             SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, vaultKeepData);
       vaultKeepData.Id = id;
       return vaultKeepData;
     }
-
 
 
     internal void Delete(int id)
