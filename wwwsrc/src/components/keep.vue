@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <a href="#">
-      <img class="card-img-top" src="" alt="Card image cap" />{{ keepData.img }}
+      <img class="card-img-top" :src="keepData.img" alt="Card image cap" />
       <div class="card-body">
         <h5 class="card-title">{{ keepData.name }}</h5>
         <p class="card-text">

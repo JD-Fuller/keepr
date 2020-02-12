@@ -59,11 +59,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 keep-section">
-        <div class="card-columns" v-for="keep in keeps" :key="keep._id">
-          <keep-component :keepData="keep" />
-          <!-- NOTE is where cards will go -->
-        </div>
+      <div
+        class="col-6 col-md-4 card-columns"
+        v-for="keep in keeps"
+        :key="keep._id"
+      >
+        <keep-component :keepData="keep" />
+        <!-- NOTE is where cards will go -->
       </div>
     </div>
   </div>
