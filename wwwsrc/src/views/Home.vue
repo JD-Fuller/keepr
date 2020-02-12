@@ -57,15 +57,11 @@
           </form>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div
-        class="col-6 col-md-4 card-columns"
-        v-for="keep in keeps"
-        :key="keep._id"
-      >
-        <keep-component :keepData="keep" />
-        <!-- NOTE is where cards will go -->
+      <div class="col-md-10 card-columns">
+        <a v-for="keep in keeps" :key="keep._id">
+          <keep-component :keepData="keep" />
+          <!-- NOTE is where cards will go -->
+        </a>
       </div>
     </div>
   </div>
@@ -84,7 +80,10 @@ export default {
         name: "",
         description: "",
         img: "",
-        isPrivate: true
+        isPrivate: false,
+        views: 0,
+        shares: 0,
+        keeps: 0
       }
     };
   },
@@ -108,7 +107,10 @@ export default {
         name: "",
         description: "",
         img: "",
-        isPrivate: true
+        isPrivate: false,
+        views: 0,
+        shares: 0,
+        keeps: 0
       };
     }
   },

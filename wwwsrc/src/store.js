@@ -21,6 +21,7 @@ export default new Vuex.Store({
     publicKeeps: [],
     privateKeeps: [],
     vaults: [],
+    userVaults: [],
     activeUser: {}
   },
   ////#endregion

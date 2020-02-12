@@ -7,12 +7,24 @@
         <p class="card-text">
           {{ keepData.description }}
         </p>
+        <select
+          class="form-control"
+          @change="addVaultKeep($event, keepData.id)"
+          v-if="$auth.isAuthenticated"
+        >
+          <option value selected disabled>Select Vault</option>
+          <option
+            v-for="vault in userVault"
+            :value="vault.id"
+            :key="vault.id"
+            >{{ vault.name }}</option
+          >
+        </select>
         <p class="card-text">
           <small class="text-muted"
-            ><i class="fas fa-eye"></i>1000<i class="far fa-user"></i>admin<i
-              class="fas fa-calendar-alt"
-            ></i
-            >Jan 20, 2018</small
+            ><i class="fas fa-eye"></i>{{ keepData.views
+            }}<i class="far fa-user"></i>{{ keepData.keeps
+            }}<i class="fas fa-calendar-alt"></i>{{ keepData.shares }}</small
           >
         </p>
       </div>
@@ -24,8 +36,11 @@
 export default {
   name: "keep",
   methods: {
-    //share task
-    //
+    addVaultKeep(event, KeepId) {
+      let VaultId = parseInt(event.target.value);
+      let vaultKeep = { VaultId, KeepId };
+      this.$store.dispatch("addVaultKeep", vaultKeep);
+    }
   },
   props: ["keepData"]
 };

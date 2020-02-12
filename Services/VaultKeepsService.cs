@@ -36,7 +36,7 @@ namespace Keepr.Services
       var exists = _repo.GetById(vaultId, keepId, userId);
       if (exists == null)
       {
-        throw new Exception("Invalid ID");
+        throw new Exception("Invalid request");
       }
       _repo.Delete(vaultId, keepId, userId);
       return "Successfully Deleted";
