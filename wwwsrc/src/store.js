@@ -11,7 +11,7 @@ let baseUrl = location.host.includes("localhost")
 
 let api = Axios.create({
   baseURL: baseUrl + "api/",
-  timeout: 8000,
+  timeout: 10000,
   withCredentials: true
 });
 
@@ -22,7 +22,8 @@ export default new Vuex.Store({
     privateKeeps: [],
     vaults: [],
     userVaults: [],
-    activeUser: {}
+    activeUser: {},
+    activeVault: {}
   },
   ////#endregion
   //#region--MUTATIONS--
@@ -36,17 +37,20 @@ export default new Vuex.Store({
     setKeeps(state, data) {
       state.publicKeeps = data;
     },
-    resetState(state) {
-      (state.publicKeeps = []),
-        (state.privateKeeps = []),
-        (state.vaults = []),
-        (state.activeUser = {});
-    },
-    addVaults(state, data) {
+    // resetState(state) {
+    //   (state.publicKeeps = []),
+    //     (state.privateKeeps = []),
+    //     (state.vaults = []),
+    //     (state.activeUser = {});
+    // },
+    addVault(state, data) {
       state.vaults.push(data);
     },
     setVaults(state, data) {
       state.vaults = data;
+    },
+    setActiveVault(state, data) {
+      state.activeVault = data;
     }
   },
   ////#endregion
@@ -71,7 +75,6 @@ export default new Vuex.Store({
     async deleteKeep({ commit, dispatch }, keepData) {
       let res = await api.delete(`keeps/${keepData._id}`);
       dispatch("getKeepsByVaultId", keepData.vaultId);
-
       //NOTE Will need to add get keeps in here as well
     },
     async editKeep({ commit, dispatch }, keepData) {
@@ -85,13 +88,14 @@ export default new Vuex.Store({
       let res = await api.get("vaults");
       commit("setVaults", res.data);
     },
-    async getVaultsByTeamId({ commit, dispatch }, teamId) {
-      let res = await api.get("teams/" + teamId + "/vaults");
+    async getVaultsByUserId({ commit, dispatch }, userId) {
+      let res = await api.get("vaults/" + userId + "/vaults");
       commit("setVaults", res.data);
     },
     async createVault({ commit, dispatch }, vaultData) {
+      debugger;
       let res = await api.post("vaults", vaultData);
-      commit("putVault", res.data);
+      commit("addVault", res.data);
     },
     async editVault({ commit, dispatch }, vaultData) {
       let res = await api.put("vaults/" + vaultData._id, vaultData);
@@ -100,6 +104,10 @@ export default new Vuex.Store({
     async deleteVault({ commit, dispatch }, vaultId) {
       let res = await api.delete("vaults/" + vaultId);
       dispatch("getVaults");
+    },
+    async setActiveVault({ commit, dispatch }, vaultId) {
+      let res = await api.get("vaults/" + vaultId);
+      dispatch("setActiveVault", res.data);
     },
     //#endregion
 

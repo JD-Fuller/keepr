@@ -57,8 +57,8 @@
           </form>
         </div>
       </div>
-      <div class="col-md-10 card-columns">
-        <a v-for="keep in keeps" :key="keep._id">
+      <div class="col-md-12 card-columns" style="flex-wrap: wrap;">
+        <a v-for="keep in keeps" :key="keep.id">
           <keep-component :keepData="keep" />
           <!-- NOTE is where cards will go -->
         </a>
@@ -72,7 +72,7 @@ import KeepComponent from "../components/keep";
 export default {
   name: "home",
   mounted() {
-    this.$store.state.dispatch("getKeeps");
+    this.$store.dispatch("getKeeps");
   },
   data() {
     return {

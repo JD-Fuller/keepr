@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" style="">
     <a href="#">
       <img class="card-img-top" :src="keepData.img" alt="Card image cap" />
       <div class="card-body">
@@ -13,12 +13,9 @@
           v-if="$auth.isAuthenticated"
         >
           <option value selected disabled>Select Vault</option>
-          <option
-            v-for="vault in userVault"
-            :value="vault.id"
-            :key="vault.id"
-            >{{ vault.name }}</option
-          >
+          <option v-for="vault in vaults" :value="vault.id" :key="vault.id">{{
+            vault.name
+          }}</option>
         </select>
         <p class="card-text">
           <small class="text-muted"
@@ -35,11 +32,22 @@
 <script>
 export default {
   name: "keep",
+  mounted() {
+    this.$store.dispatch("getKeeps");
+  },
   methods: {
     addVaultKeep(event, KeepId) {
       let VaultId = parseInt(event.target.value);
       let vaultKeep = { VaultId, KeepId };
       this.$store.dispatch("addVaultKeep", vaultKeep);
+    }
+  },
+  computed: {
+    keeps() {
+      return this.$store.state.publicKeeps;
+    },
+    vaults() {
+      return this.$store.state.vaults;
     }
   },
   props: ["keepData"]

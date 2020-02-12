@@ -24,7 +24,6 @@ namespace Keepr.Repositories
     {
       string sql = "SELECT * FROM vaults WHERE id = @id";
       return _db.QueryFirstOrDefault<Vault>(sql, new { id });
-
     }
 
     internal Vault Create(Vault vaultData)
