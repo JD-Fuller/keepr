@@ -58,12 +58,14 @@ export default new Vuex.Store({
     },
 
     //#region --KEEPS--
-    async addKeep({ commit, dispatch }, keepData) {
+    async createKeep({ commit, dispatch }, keepData) {
       console.log(keepData);
+      debugger;
       let res = await api.post("keeps", keepData);
       commit("addKeep", res.data);
     },
     async getKeeps({ commit, dispatch }) {
+      debugger;
       let res = await api.get("keeps");
       commit("setKeeps", res.data);
     },

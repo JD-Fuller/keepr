@@ -5,7 +5,7 @@
         <h1 style="text-align: center;">Keepr of the Keeps</h1>
         <div class="home">
           <form
-            @submit.prevent="addKeep"
+            @submit.prevent="createKeep"
             class="form-inline"
             style="justify-content: space-evenly;"
             role="form"
@@ -36,9 +36,9 @@
               <input
                 type="text"
                 class="form-control"
-                id="image"
+                id="img"
                 placeholder="image"
-                v-model="newKeep.image"
+                v-model="newKeep.img"
               />
             </div>
             <div class="custom-control custom-checkbox">
@@ -81,7 +81,7 @@ export default {
       newKeep: {
         name: "",
         description: "",
-        image: "",
+        img: "",
         isPrivate: true
       }
     };
@@ -91,7 +91,7 @@ export default {
       return this.$store.state.user;
     },
     keeps() {
-      return this.$store.state.keeps;
+      return this.$store.state.publicKeeps;
     }
   },
   methods: {
@@ -100,11 +100,12 @@ export default {
     },
     createKeep() {
       let keep = { ...this.newKeep };
-      this.$store.dispatch("addKeep", keep);
+      debugger;
+      this.$store.dispatch("createKeep", keep);
       this.newKeep = {
         name: "",
         description: "",
-        image: "",
+        img: "",
         isPrivate: true
       };
     }

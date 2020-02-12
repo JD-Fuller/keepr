@@ -1,14 +1,11 @@
 <template>
   <div class="card">
     <a href="#">
-      <img class="card-img-top" src="" alt="Card image cap" />
+      <img class="card-img-top" src="" alt="Card image cap" />{{ keepData.img }}
       <div class="card-body">
-        <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+        <h5 class="card-title">{{ keepData.name }}</h5>
         <p class="card-text">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-          accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis
-          dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum
-          illo impedit incidunt laborum laudantium...
+          {{ keepData.description }}
         </p>
         <p class="card-text">
           <small class="text-muted"
@@ -26,10 +23,11 @@
 <script>
 export default {
   name: "keep",
-  methiods: {
+  methods: {
     //share task
     //
-  }
+  },
+  props: ["keepData"]
 };
 </script>
 
