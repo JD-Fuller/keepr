@@ -1,11 +1,7 @@
 <template>
   <div class="card">
     <a href="#">
-      <img
-        class="card-img-top"
-        src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80"
-        alt="Card image cap"
-      />
+      <img class="card-img-top" src="" alt="Card image cap" />
       <div class="card-body">
         <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
         <p class="card-text">
@@ -28,10 +24,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "keep",
+  methiods: {
+    //share task
+    //
+  }
+};
 </script>
 
-<style>
+<style scoped>
 body {
   background: #232321;
 }
