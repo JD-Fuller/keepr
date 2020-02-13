@@ -1,6 +1,10 @@
 <template>
-  <div class="card" style="max-width: 250px">
-    <img class="card-img-top" :src="keepData.img" alt="Card image cap" />
+  <div class="card m-3 rounded-lg" style="max-width: 250px">
+    <img
+      class="card-img-top rounded-top"
+      :src="keepData.img"
+      alt="Card image cap"
+    />
     <div class="card-body">
       <h4 class="card-title">{{ keepData.name }}</h4>
       <p class="card-text">
@@ -16,15 +20,22 @@
           vault.name
         }}</option>
       </select>
-      <template v-if="this.$route.params == 'Dashboard'">
-        <button>
-          <i
-            class="fas fa-times-circle"
-            @click="deleteVaultKeep(keepData.id)"
-            v-if="$auth.isAuthenticated"
-          ></i>
-        </button>
-      </template>
+
+      <button
+        class="border-0 float-right"
+        @click="deleteKeep(keepData.id)"
+        v-if="this.keepData.userId == this.$auth.user.sub"
+      >
+        <i class="fas fa-times-circle" v-if="$auth.isAuthenticated"></i>
+      </button>
+
+      <button
+        class="border-0 float-right"
+        @click="deleteVaultKeep(keepData.id)"
+        v-if="this.$route.name == 'dashboard'"
+      >
+        <i class="fas fa-times-circle" v-if="$auth.isAuthenticated"></i>
+      </button>
       <p class="card-text">
         <small class="text-muted"
           ><i class="fas fa-eye"></i>{{ keepData.views
@@ -55,6 +66,13 @@ export default {
       let vaultId = this.activeVault.id;
       vaultKeep = { vaultId, keepId };
       this.$store.dispatch("deleteVaultKeep", vaultKeep);
+    },
+    deleteKeep(keepId) {
+      debugger;
+      let vaultKeep = {};
+      let vaultId = this.activeVault.id;
+      vaultKeep = { vaultId, keepId };
+      this.$store.dispatch("deleteKeep", vaultKeep);
     }
   },
   computed: {
@@ -66,6 +84,10 @@ export default {
     },
     activeVault() {
       return this.$store.state.activeVault;
+    },
+    user() {
+      return this.$user.sub;
+      console.log(this.$user.sub);
     }
   },
   props: ["keepData"]

@@ -4,13 +4,12 @@
       <div class="col-md-12" style="flex-wrap: wrap">
         <div class="card" style="border: .1rem solid lightgrey;">
           <h3 class="card-header name">{{ activeVault.name }}</h3>
-
-          <i
-            class="far fa-minus-square align-self-end"
-            style=""
-            @click="deleteVault(activeVault.id)"
-            v-if="$auth.isAuthenticated"
-          ></i>
+          <button @click="deleteVault(activeVault.id)">
+            <i
+              class="far fa-minus-square align-self-end"
+              v-if="$auth.isAuthenticated"
+            ></i>
+          </button>
 
           <h5 class="description">{{ activeVault.description }}</h5>
           <br />
@@ -36,6 +35,7 @@ export default {
   },
   methods: {
     deleteVault(vaultId) {
+      debugger;
       this.$store.dispatch("deleteVault", vaultId);
     }
   },
