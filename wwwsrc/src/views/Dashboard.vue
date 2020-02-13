@@ -39,43 +39,54 @@
         </select>
       </div>
       <div class="col-12">
-        <h2 style="text-align: center;">Active Vault Goes Here</h2>
-        <div v-for="aVault in activeVault" :key="aVault.id">
-          <vault-component :vaultData="aVault" />
-          <!--NOTE Vault Component will go here-->
-        </div>
+        <h2 style="text-align: center;">{{ activeVault.name }}</h2>
+        <!--NOTE Vault Component -->
+        <vault-component />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import VaultComponent from "../components/Vaults";
+import VaultComponent from "../components/vaults";
 export default {
   name: "dashboard",
   data() {
     return {
       newVault: {
         name: "",
-        description: ""
+        description: "",
+        isPrivate: false,
+        views: 0,
+        shares: 0,
+        keeps: 0
       }
     };
   },
   mounted() {
+    debugger;
     this.$store.dispatch("getVaults");
-    this.$store.dispatch("getKeepsByVaultId");
+    this.$store.dispatch("getKeepsByVaultId", this.activeVaultId);
     this.$store.dispatch("getActiveVault");
   },
   methods: {
     setActiveVault(event) {
       this.activeVaultId =
         event.target.options[event.target.options.selectedIndex].value;
-      this.$store.commit("setActiveVault", this.activeVaultId);
+      this.$store.dispatch("setActiveVault", this.activeVaultId);
+      this.$store.dispatch("getKeepsByVaultId", this.activeVaultId);
     },
     createVault() {
       let vault = { ...this.newVault };
       this.$store.dispatch("createVault", vault);
-      this.newVault = { name: "", description: "" };
+      this.newVault = {
+        name: "",
+        description: "",
+        isPrivate: false,
+        views: 0,
+        shares: 0,
+        keeps: 0
+      };
     },
     deleteVault(vaultId) {
       this.$store.dispatch("deleteVault", vaultId);
@@ -83,10 +94,10 @@ export default {
   },
   computed: {
     activeVault() {
-      debugger;
       return this.$store.state.activeVault;
     },
     vaults() {
+      debugger;
       return this.$store.state.vaults;
     }
   },

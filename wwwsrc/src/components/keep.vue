@@ -1,31 +1,35 @@
 <template>
-  <div class="card" style="">
-    <a href="#">
-      <img class="card-img-top" :src="keepData.img" alt="Card image cap" />
-      <div class="card-body">
-        <h5 class="card-title">{{ keepData.name }}</h5>
-        <p class="card-text">
-          {{ keepData.description }}
-        </p>
-        <select
-          class="form-control"
-          @change="addVaultKeep($event, keepData.id)"
-          v-if="$auth.isAuthenticated"
+  <div class="card" style="max-width: 250px">
+    <img class="card-img-top" :src="keepData.img" alt="Card image cap" />
+    <div class="card-body">
+      <h4 class="card-title">{{ keepData.name }}</h4>
+      <p class="card-text">
+        {{ keepData.description }}
+      </p>
+      <select
+        class="form-control"
+        @change="addVaultKeep($event, keepData.id)"
+        v-if="$auth.isAuthenticated"
+      >
+        <option value selected disabled>Select Vault</option>
+        <option v-for="vault in vaults" :value="vault.id" :key="vault.id">{{
+          vault.name
+        }}</option>
+      </select>
+      <button>
+        <i
+          class="fas fa-times-circle"
+          @click="deleteVaultKeep(keepData.id)"
+        ></i>
+      </button>
+      <p class="card-text">
+        <small class="text-muted"
+          ><i class="fas fa-eye"></i>{{ keepData.views
+          }}<i class="far fa-user"></i>{{ keepData.keeps
+          }}<i class="fas fa-calendar-alt"></i>{{ keepData.shares }}</small
         >
-          <option value selected disabled>Select Vault</option>
-          <option v-for="vault in vaults" :value="vault.id" :key="vault.id">{{
-            vault.name
-          }}</option>
-        </select>
-        <p class="card-text">
-          <small class="text-muted"
-            ><i class="fas fa-eye"></i>{{ keepData.views
-            }}<i class="far fa-user"></i>{{ keepData.keeps
-            }}<i class="fas fa-calendar-alt"></i>{{ keepData.shares }}</small
-          >
-        </p>
-      </div>
-    </a>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -34,12 +38,19 @@ export default {
   name: "keep",
   mounted() {
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaults");
   },
   methods: {
-    addVaultKeep(event, KeepId) {
+    addVaultKeep(event, keepId) {
       let VaultId = parseInt(event.target.value);
-      let vaultKeep = { VaultId, KeepId };
+      let vaultKeep = { vaultId, keepId };
       this.$store.dispatch("addVaultKeep", vaultKeep);
+    },
+    deleteVaultKeep(keepId) {
+      let vaultKeep = {};
+      let vaultId = this.activeVault.id;
+      vaultKeep = { vaultId, keepId };
+      this.$store.dispatch("deleteVaultKeep", vaultKeep);
     }
   },
   computed: {
@@ -48,6 +59,9 @@ export default {
     },
     vaults() {
       return this.$store.state.vaults;
+    },
+    activeVault() {
+      return this.$store.state.activeVault;
     }
   },
   props: ["keepData"]

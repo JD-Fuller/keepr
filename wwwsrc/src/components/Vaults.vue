@@ -1,31 +1,45 @@
 <template>
-  <div class="vault">
-    <h2 class="name">{{ vaultData.name }}</h2>
-    <div class="description">{{ vaultData.description }}</div>
-    <form @submit.prevent="addKeep">
-      <input type="text" placeholder="name" v-model="newKeep.name" required />
-      <button type="submit">Create Keep</button>
-    </form>
-    <br />
-    <div class="row" style="padding: 0rem 3rem">
-      <div v-for="keep in keeps" :key="keep._id">
-        <Keep :keepData="keep" />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12" style="flex-wrap: wrap">
+        <div class="card" style="border: .1rem solid lightgrey;">
+          <h3 class="card-header name">{{ activeVault.name }}</h3>
+          <h5 class="description">{{ activeVault.description }}</h5>
+          <br />
+          <div class="row">
+            <div class="col-md-12 card-columns" style="flex-wrap: wrap;">
+              <div v-for="vKeep in vaultKeeps" :key="vKeep._id">
+                <keep-component :keepData="vKeep" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Keep from "../components/keep";
+import KeepComponent from "../components/keep";
 export default {
-  name: "vaults",
+  name: "vault",
   mounted() {
-    this.$store.dispatch("getKeepsByVaultId", vaultData.id);
+    // this.$store.dispatch("setActiveVault", vaultData.id);
+    this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
   },
   computed: {
-    keeps() {
-      return this.$store.state.publicKeeps;
+    activeVault() {
+      return this.$store.state.activeVault;
+    },
+    // keeps() {
+    //   return this.$store.state.privateKeeps;
+    // },
+    vaultKeeps() {
+      return this.$store.state.vaultKeeps;
     }
+  },
+  components: {
+    KeepComponent
   },
   props: ["vaultData"]
 };

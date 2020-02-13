@@ -23,7 +23,8 @@ export default new Vuex.Store({
     vaults: [],
     userVaults: [],
     activeUser: {},
-    activeVault: {}
+    activeVault: {},
+    vaultKeeps: []
   },
   ////#endregion
   //#region--MUTATIONS--
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     setKeeps(state, data) {
       state.publicKeeps = data;
+    },
+    setActiveKeeps(state, data) {
+      state.privateKeeps = data;
     },
     // resetState(state) {
     //   (state.publicKeeps = []),
@@ -50,7 +54,11 @@ export default new Vuex.Store({
       state.vaults = data;
     },
     setActiveVault(state, data) {
+      state.activeVault = {};
       state.activeVault = data;
+    },
+    setVaultKeeps(state, data) {
+      state.vaultKeeps = data;
     }
   },
   ////#endregion
@@ -93,7 +101,6 @@ export default new Vuex.Store({
       commit("setVaults", res.data);
     },
     async createVault({ commit, dispatch }, vaultData) {
-      debugger;
       let res = await api.post("vaults", vaultData);
       commit("addVault", res.data);
     },
@@ -107,14 +114,24 @@ export default new Vuex.Store({
     },
     async setActiveVault({ commit, dispatch }, vaultId) {
       let res = await api.get("vaults/" + vaultId);
-      dispatch("setActiveVault", res.data);
+      commit("setActiveVault", res.data);
     },
     //#endregion
 
     //#region --VAULTKEEPS--
     async getKeepsByVaultId({ commit, dispatch }, vaultId) {
       let res = await api.get("vaultkeeps/" + vaultId + "/keeps");
-      commit("setKeeps", res.data);
+      commit("setVaultKeeps", res.data);
+    },
+    async addVaultKeep({ commit, dispatch }, data) {
+      let res = await api.post("vaultkeeps", data);
+      dispatch("getKeepsByVaultId", res.data.vaultId);
+    },
+    async deleteVaultKeep({ commit, dispatch }, data) {
+      let res = await api.delete(
+        "vaultkeeps/" + data.vaultId + "/keeps/" + data.keepId
+      );
+      dispatch("getKeepsByVaultId", data.vaultId);
     }
 
     //#endregion
