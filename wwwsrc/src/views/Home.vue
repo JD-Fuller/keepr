@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.commit("resetState");
+      // this.$store.commit("resetState");
       this.$store.dispatch("logout");
     },
     createKeep() {

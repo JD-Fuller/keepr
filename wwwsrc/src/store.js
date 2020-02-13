@@ -74,7 +74,6 @@ export default new Vuex.Store({
 
     //#region --KEEPS--
     async createKeep({ commit, dispatch }, keepData) {
-      console.log(keepData);
       let res = await api.post("keeps", keepData);
       commit("addKeep", res.data);
     },
@@ -96,17 +95,17 @@ export default new Vuex.Store({
     //#region --VAULTS--
     async getVaults({ commit, dispatch }) {
       let res = await api.get("vaults");
-      debugger;
+
       commit("setVaults", res.data);
+      console.log("vaults page", res.data);
     },
     async getVaultsById({ commit, dispatch }, id) {
-      debugger;
       let res = await api.get("vaults/" + id);
       commit("setVaults", res.data);
     },
     async createVault({ commit, dispatch }, vaultData) {
       let res = await api.post("vaults", vaultData);
-      debugger;
+
       commit("addVault", res.data);
     },
     async editVault({ commit, dispatch }, vaultData) {

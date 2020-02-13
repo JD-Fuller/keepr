@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Keepr.Models;
 using Dapper;
@@ -17,8 +18,11 @@ namespace Keepr.Repositories
 
     internal IEnumerable<Vault> Get(string userId)
     {
+
+      // string sql = "SELECT * FROM vaults;";
       string sql = "SELECT * FROM vaults WHERE userId = @userId;";
       return _db.Query<Vault>(sql, new { userId });
+      // return _db.Query<Vault>(sql);
     }
     internal Vault GetById(int id)
     {
@@ -29,7 +33,7 @@ namespace Keepr.Repositories
     internal Vault Create(Vault vaultData)
     {
       string sql = @"
-            INSERT INTO vaults (name, description) VALUES (@Name, @Description);
+            INSERT INTO vaults (name, description, userId) VALUES (@Name, @Description, @UserId);
             SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, vaultData);
       vaultData.Id = id;

@@ -29,6 +29,8 @@ namespace Keepr.Controllers
       try
       {
         var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        // return Ok(_vs.Get());
+
         return Ok(_vs.Get(userId));
       }
       catch (Exception e)
@@ -38,7 +40,7 @@ namespace Keepr.Controllers
     }
     [HttpGet("{id}")]
     [Authorize]
-    public ActionResult<Vault> Get(int id)
+    public ActionResult<Vault> GetById(int id)
     {
       try
       {

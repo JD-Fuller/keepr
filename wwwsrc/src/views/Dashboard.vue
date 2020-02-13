@@ -65,7 +65,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getVaults");
-    // this.$store.dispatch("getVaultsById", this.activeVaultId);
     this.$store.dispatch("getKeepsByVaultId", this.activeVaultId);
     this.$store.dispatch("getActiveVault");
   },
@@ -78,6 +77,7 @@ export default {
     },
     createVault() {
       let vault = { ...this.newVault };
+      debugger;
       this.$store.dispatch("createVault", vault);
       this.newVault = {
         name: "",
@@ -97,6 +97,7 @@ export default {
       return this.$store.state.activeVault;
     },
     vaults() {
+      debugger;
       return this.$store.state.vaults;
     }
   },

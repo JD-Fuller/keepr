@@ -16,15 +16,15 @@
           vault.name
         }}</option>
       </select>
-      <!--NOTE <template v-if="">-->
-      <button>
-        <i
-          class="fas fa-times-circle"
-          @click="deleteVaultKeep(keepData.id)"
-          v-if="$auth.isAuthenticated"
-        ></i>
-      </button>
-      <!-- </template> -->
+      <template v-if="this.$route.params == 'Dashboard'">
+        <button>
+          <i
+            class="fas fa-times-circle"
+            @click="deleteVaultKeep(keepData.id)"
+            v-if="$auth.isAuthenticated"
+          ></i>
+        </button>
+      </template>
       <p class="card-text">
         <small class="text-muted"
           ><i class="fas fa-eye"></i>{{ keepData.views
@@ -50,6 +50,7 @@ export default {
       this.$store.dispatch("addVaultKeep", vaultKeep);
     },
     deleteVaultKeep(keepId) {
+      debugger;
       let vaultKeep = {};
       let vaultId = this.activeVault.id;
       vaultKeep = { vaultId, keepId };
