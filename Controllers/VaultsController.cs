@@ -28,21 +28,22 @@ namespace Keepr.Controllers
     {
       try
       {
-        return Ok(_vs.Get());
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vs.Get(userId));
       }
       catch (Exception e)
       {
         return BadRequest(e.Message);
       };
     }
-
     [HttpGet("{id}")]
     [Authorize]
     public ActionResult<Vault> Get(int id)
     {
       try
       {
-        return Ok(_vs.GetById(id));
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return Ok(_vs.GetById(id, userId));
       }
       catch (Exception e)
       {
@@ -50,7 +51,6 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
-
     [HttpPost]
     [Authorize]
     public ActionResult<Vault> Create([FromBody] Vault newVault)

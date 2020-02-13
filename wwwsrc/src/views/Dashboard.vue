@@ -65,6 +65,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getVaults");
+    // this.$store.dispatch("getVaultsById", this.activeVaultId);
     this.$store.dispatch("getKeepsByVaultId", this.activeVaultId);
     this.$store.dispatch("getActiveVault");
   },

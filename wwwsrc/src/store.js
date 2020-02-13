@@ -96,14 +96,17 @@ export default new Vuex.Store({
     //#region --VAULTS--
     async getVaults({ commit, dispatch }) {
       let res = await api.get("vaults");
+      debugger;
       commit("setVaults", res.data);
     },
-    async getVaultsByUserId({ commit, dispatch }, userId) {
-      let res = await api.get("vaults/" + userId + "/vaults");
+    async getVaultsById({ commit, dispatch }, id) {
+      debugger;
+      let res = await api.get("vaults/" + id);
       commit("setVaults", res.data);
     },
     async createVault({ commit, dispatch }, vaultData) {
       let res = await api.post("vaults", vaultData);
+      debugger;
       commit("addVault", res.data);
     },
     async editVault({ commit, dispatch }, vaultData) {

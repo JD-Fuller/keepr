@@ -41,7 +41,7 @@ export default {
   name: "keep",
   mounted() {
     this.$store.dispatch("getKeeps");
-    // this.$store.dispatch("getVaults");
+    this.$store.dispatch("getVaults");
   },
   methods: {
     addVaultKeep(event, keepId) {
