@@ -16,12 +16,15 @@
           vault.name
         }}</option>
       </select>
+      <!--NOTE <template v-if="">-->
       <button>
         <i
           class="fas fa-times-circle"
           @click="deleteVaultKeep(keepData.id)"
+          v-if="$auth.isAuthenticated"
         ></i>
       </button>
+      <!-- </template> -->
       <p class="card-text">
         <small class="text-muted"
           ><i class="fas fa-eye"></i>{{ keepData.views
@@ -38,11 +41,11 @@ export default {
   name: "keep",
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getVaults");
+    // this.$store.dispatch("getVaults");
   },
   methods: {
     addVaultKeep(event, keepId) {
-      let VaultId = parseInt(event.target.value);
+      let vaultId = parseInt(event.target.value);
       let vaultKeep = { vaultId, keepId };
       this.$store.dispatch("addVaultKeep", vaultKeep);
     },
@@ -70,7 +73,7 @@ export default {
 
 <style scoped>
 body {
-  background: #232321;
+  background: white;
 }
 h1 {
   color: #fff;

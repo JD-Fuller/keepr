@@ -4,6 +4,14 @@
       <div class="col-md-12" style="flex-wrap: wrap">
         <div class="card" style="border: .1rem solid lightgrey;">
           <h3 class="card-header name">{{ activeVault.name }}</h3>
+
+          <i
+            class="far fa-minus-square align-self-end"
+            style=""
+            @click="deleteVault(activeVault.id)"
+            v-if="$auth.isAuthenticated"
+          ></i>
+
           <h5 class="description">{{ activeVault.description }}</h5>
           <br />
           <div class="row">
@@ -24,16 +32,20 @@ import KeepComponent from "../components/keep";
 export default {
   name: "vault",
   mounted() {
-    // this.$store.dispatch("setActiveVault", vaultData.id);
     this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
+  },
+  methods: {
+    deleteVault(vaultId) {
+      this.$store.dispatch("deleteVault", vaultId);
+    }
   },
   computed: {
     activeVault() {
       return this.$store.state.activeVault;
     },
-    // keeps() {
-    //   return this.$store.state.privateKeeps;
-    // },
+    keeps() {
+      return this.$store.state.publicKeeps;
+    },
     vaultKeeps() {
       return this.$store.state.vaultKeeps;
     }

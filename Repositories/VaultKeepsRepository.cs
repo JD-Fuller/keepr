@@ -62,7 +62,7 @@ namespace Keepr.Repositories
 
     internal void Delete(int vaultId, int keepId, string userId)
     {
-      string sql = @"DELETE FROM vaultkeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId";
+      string sql = @"DELETE FROM vaultkeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId LIMIT 1";
       _db.Execute(sql, new { vaultId, keepId, userId });
     }
   }

@@ -41,12 +41,14 @@ export default new Vuex.Store({
     setActiveKeeps(state, data) {
       state.privateKeeps = data;
     },
-    // resetState(state) {
-    //   (state.publicKeeps = []),
-    //     (state.privateKeeps = []),
-    //     (state.vaults = []),
-    //     (state.activeUser = {});
-    // },
+    resetState(state) {
+      (state.publicKeeps = []),
+        (state.privateKeeps = []),
+        (state.vaults = []),
+        (state.activeUser = {}),
+        (state.vaultKeeps = []),
+        (state.activeVault = []);
+    },
     addVault(state, data) {
       state.vaults.push(data);
     },

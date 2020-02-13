@@ -41,7 +41,7 @@
       <div class="col-12">
         <h2 style="text-align: center;">{{ activeVault.name }}</h2>
         <!--NOTE Vault Component -->
-        <vault-component />
+        <vault-component :vaultData="vault" />
       </div>
     </div>
   </div>
@@ -64,7 +64,6 @@ export default {
     };
   },
   mounted() {
-    debugger;
     this.$store.dispatch("getVaults");
     this.$store.dispatch("getKeepsByVaultId", this.activeVaultId);
     this.$store.dispatch("getActiveVault");
@@ -97,7 +96,6 @@ export default {
       return this.$store.state.activeVault;
     },
     vaults() {
-      debugger;
       return this.$store.state.vaults;
     }
   },
