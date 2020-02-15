@@ -4,7 +4,10 @@
       <div class="col-md-12" style="flex-wrap: wrap">
         <div class="card" style="border: .1rem solid lightgrey;">
           <h3 class="card-header name">{{ activeVault.name }}</h3>
-          <button @click="deleteVault(activeVault.id)">
+          <button
+            class="border-0 float-right"
+            @click="deleteVault(activeVault.id)"
+          >
             <i
               class="far fa-minus-square align-self-end"
               v-if="$auth.isAuthenticated"
