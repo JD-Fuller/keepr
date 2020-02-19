@@ -22,9 +22,9 @@
       </select>
 
       <button
-        class="border-0 float-right"
+        class="border-0 float-right danger"
         @click="deleteKeep(keepData.id)"
-        v-if="this.keepData.userId == this.$auth.user.sub"
+        v-if="this.$route.name == 'home'"
       >
         <i class="fas fa-times-circle" v-if="$auth.isAuthenticated"></i>
       </button>
@@ -69,10 +69,10 @@ export default {
     },
     deleteKeep(keepId) {
       debugger;
-      let vaultKeep = {};
-      let vaultId = this.activeVault.id;
-      vaultKeep = { vaultId, keepId };
-      this.$store.dispatch("deleteKeep", vaultKeep);
+      // let vaultKeep = {};
+      // let vaultId = this.activeVault.id;
+      // vaultKeep = { vaultId, keepId };
+      this.$store.dispatch("deleteKeep", keepId);
     }
   },
   computed: {
